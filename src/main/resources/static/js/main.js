@@ -1,8 +1,8 @@
-var messageApi = Vue.resource('message{/id}')
+var messageApi = Vue.resource('/message{/id}')
 
 Vue.component('message-row', {
   props: ['message'],
-  template: '<div><i>({{ message.id }})</i> {{ message.text }}</div>'
+  template: '<div><i>({{ message.id }})</i> {{ message.text }}</div>',
 });
 Vue.component('messages-list', {
   props: ['messages'],
@@ -13,7 +13,7 @@ Vue.component('messages-list', {
   created: function() {
     messageApi.get().then(result =>
         result.json().then(data =>
-            console.log(data)
+            data.forEach(message => this.messages.push(message))
         )
     )
   }
