@@ -29,7 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PrincipalExtractor principalExtractor (UserDetailsRepo userDetailsRepo){
         return map -> {
-            String id = (String) map.get("sub)");
+            String id = (String) map.get("sub");
+
             User user = userDetailsRepo.findById(id).orElseGet(() -> {
                 User newUser = new User();
 
