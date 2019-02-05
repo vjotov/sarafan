@@ -1,6 +1,6 @@
 package com.jotov.sarafan.domain;
 
-import lombok.Data;
+//import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usr")
-@Data
+
 public class User {
     @Id
     private String id;
