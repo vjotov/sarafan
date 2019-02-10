@@ -24,4 +24,8 @@ public class Message {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonView(Views.FullMessage.class)
     private LocalDateTime creationDate;
+
+    public void setCreationDate(LocalDateTime dateTime) {
+        creationDate = dateTime;
+    }
 }

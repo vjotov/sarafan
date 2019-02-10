@@ -1,6 +1,8 @@
 package com.jotov.sarafan.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.jotov.sarafan.domain.Message;
+import com.jotov.sarafan.domain.Views;
 import com.jotov.sarafan.repo.MessageRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,17 +26,20 @@ public class MessageController {
 
 
     @GetMapping
+    @JsonView(Views.Id.class)
     public List<Message> list() {
         return messageRepo.findAll();
     }
 
     @GetMapping("{id}")
+    @JsonView(Views.FullMessage.class)
     public Message getOne(@PathVariable("id") Message message){
         return message;
     }
 
     @PostMapping
     public Message create(@RequestBody Message message){
+        message.setCreationDate(LocalDateTime.now());
         return messageRepo.save(message);
     }
     // fetch("/message/5", { method: 'PUT', headers: {'Content-Type':'application/json'}, body:JSON.stringify({text:'Fifth message updated'})}).then(console.log)
