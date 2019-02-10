@@ -1,0 +1,27 @@
+{
+  "name": "sarafan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:drucoder/sarafan.git",
+  "author": "Andrey <i@dru.su>",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "dependencies": {
+    "@stomp/stompjs": "^5.2.0",
+    "sockjs-client": "^1.3.0",
+    "vue": "^2.6.4",
+    "vue-resource": "^1.5.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "vue-loader": "^15.6.2",
+    "vue-template-compiler": "^2.6.4",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.7"
+  }
+}

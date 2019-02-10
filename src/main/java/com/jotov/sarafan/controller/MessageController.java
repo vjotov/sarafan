@@ -4,6 +4,8 @@ import com.jotov.sarafan.domain.Message;
 import com.jotov.sarafan.repo.MessageRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,4 +54,10 @@ public class MessageController {
         messageRepo.delete(message);
     }
     // fetch("/message/4", { method: 'DELETE', headers: {'Content-Type':'application/json'}}).then(console.log)
+
+    @MessageMapping("/changeMassage")
+    @SendTo("/topic/activity")
+    public Message change(Message message) {
+        return messageRepo.save(message);
+    }
 }
