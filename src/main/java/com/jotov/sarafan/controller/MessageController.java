@@ -61,9 +61,11 @@ public class MessageController {
     }
     // fetch("/message/4", { method: 'DELETE', headers: {'Content-Type':'application/json'}}).then(console.log)
 
-    @MessageMapping("/changeMassage")
+    @MessageMapping("/changeMessage")
     @SendTo("/topic/activity")
     public Message change(Message message) {
+
         return messageRepo.save(message);
+
     }
 }
