@@ -13,7 +13,7 @@
 <script>
     import MessagesList from 'components/messages/MessageList.vue'
     import { addHandler } from 'util/ws'
-    //import { getIndex } from 'util/collections'
+    import { getIndex } from 'util/collections'
     export default {
         components: {
             MessagesList
@@ -30,7 +30,7 @@
                 if (index > -1) {
                     this.messages.splice(index, 1, data)
                 } else {
-                    this.messages.push(data)
+                     this.messages.push(data)
                 }
             })
         }

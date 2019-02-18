@@ -602,7 +602,7 @@
   resolved "https://registry.yarnpkg.com/@stomp/stompjs/-/stompjs-5.2.0.tgz#ddf924af5ab4da494f3c9be192a2990fe38ec537"
   integrity sha512-AcEMFESryjEMMZlIqPfk2HjqbLPd3YUtd5eq0KqbpQI8HathxHUycIgZ2Myon9AYH+4IOhMe/FgDC58Bc022Uw==
 
-"@vue/component-compiler-utils@^2.0.0", "@vue/component-compiler-utils@^2.5.1":
+"@vue/component-compiler-utils@^2.5.1":
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/@vue/component-compiler-utils/-/component-compiler-utils-2.5.2.tgz#a8d57e773354ab10e4742c7d6a8dd86184d4d7be"
   integrity sha512-3exq9O89GXo9E+CGKzgURCbasG15FtFMs8QRrCUVWGaKue4Egpw41MHb3Avtikv1VykKfBq3FvAnf9Nx3sdVJg==
@@ -4796,17 +4796,6 @@ vue-template-es2015-compiler@^1.8.2:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.8.2.tgz#dd73e80ba58bb65dd7a8aa2aeef6089cf6116f2a"
   integrity sha512-cliV19VHLJqFUYbz/XeWXe5CO6guzwd0yrrqqp0bmjlMP3ZZULY7fu8RTC4+3lmHwo6ESVDHFDsvjB15hcR5IA==
-
-vue-template-loader@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vue-template-loader/-/vue-template-loader-1.0.0.tgz#fd350bd52c7ad8bb6add01401276f26bf2ec9b37"
-  integrity sha512-bVAW0bGDsXDRYSiMcOok+zTFMGQkvhP5EaMMeNuPrfxdrSF38jh5BsoCj10FbgK21FK015o5iZOs907JqI9LnQ==
-  dependencies:
-    "@vue/component-compiler-utils" "^2.0.0"
-    hash-sum "^1.0.2"
-    loader-utils "^1.1.0"
-    source-map "^0.6.1"
-    vue-hot-reload-api "^2.3.0"
 
 vue@^2.6.4:
   version "2.6.4"

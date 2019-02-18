@@ -2,6 +2,7 @@ package com.jotov.sarafan.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Table
 @ToString(of = {"id", "text"})
 @EqualsAndHashCode(of = {"id"})
+@Data
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
