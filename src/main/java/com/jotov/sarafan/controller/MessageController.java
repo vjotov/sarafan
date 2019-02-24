@@ -3,25 +3,29 @@ package com.jotov.sarafan.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jotov.sarafan.domain.Message;
 import com.jotov.sarafan.domain.Views;
+import com.jotov.sarafan.dto.EventType;
+import com.jotov.sarafan.dto.ObjectType;
 import com.jotov.sarafan.repo.MessageRepo;
+import com.jotov.sarafan.util.WsSender;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 @RestController
 @RequestMapping("message")
 public class MessageController {
 
     private final MessageRepo messageRepo;
+    private final BiConsumer<EventType, Message> wsSender;
 
     @Autowired
-    public MessageController(MessageRepo messageRepo) {
+    public MessageController(MessageRepo messageRepo, WsSender wsSender) {
         this.messageRepo = messageRepo;
+        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
     }
 
 
@@ -40,7 +44,11 @@ public class MessageController {
     @PostMapping
     public Message create(@RequestBody Message message){
         message.setCreationDate(LocalDateTime.now());
-        return messageRepo.save(message);
+        Message updatedMessage = messageRepo.save(message);
+
+        wsSender.accept(EventType.CREATE, updatedMessage);
+
+    return updatedMessage;
     }
     // fetch("/message/5", { method: 'PUT', headers: {'Content-Type':'application/json'}, body:JSON.stringify({text:'Fifth message updated'})}).then(console.log)
 
@@ -51,21 +59,27 @@ public class MessageController {
     ) {
         BeanUtils.copyProperties(message, messageFromDb, "id");
 
-        return messageRepo.save(messageFromDb);
+        Message updatedMessage = messageRepo.save(messageFromDb);
+
+        wsSender.accept(EventType.UPDATE, updatedMessage);
+
+        return updatedMessage;
     }
     // fetch("/message/5", { method: 'PUT', headers: {'Content-Type':'application/json'}, body:JSON.stringify({id:"5", text:'Fifth message updated'})}).then(console.log)
 
     @DeleteMapping("{id}")
     public void delete( @PathVariable("id") Message message) {
+
         messageRepo.delete(message);
+        wsSender.accept(EventType.REMOVE, message);
     }
     // fetch("/message/4", { method: 'DELETE', headers: {'Content-Type':'application/json'}}).then(console.log)
 
-    @MessageMapping("/changeMessage")
-    @SendTo("/topic/activity")
-    public Message change(Message message) {
-
-        return messageRepo.save(message);
-
-    }
+//    @MessageMapping("/changeMessage")
+//    @SendTo("/topic/activity")
+//    public Message change(Message message) {
+//
+//        return messageRepo.save(message);
+//
+//    }
 }
