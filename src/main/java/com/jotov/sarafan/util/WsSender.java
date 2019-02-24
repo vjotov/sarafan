@@ -26,7 +26,7 @@ public class WsSender {
         ObjectWriter writer = mapper
                 .setConfig(mapper.getSerializationConfig())
                 .writerWithView(view);
-
+//return null;
         return (EventType eventType,T payload) -> {
             String value = null;
             try {
@@ -36,8 +36,8 @@ public class WsSender {
             }
             template.convertAndSend(
                     "/topic/activity",
-                    new WsEventDto(objectType, eventType, value);
+                    new WsEventDto(objectType, eventType, value)
             );
-        }
+        };
     }
 }
