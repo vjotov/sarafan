@@ -1,5 +1,5 @@
 <template>
-    <v-layout align-space-around justify-start column fill-height>
+    <v-layout align-space-around justify-start column>
         <message-form :messages="messages" :messageAttr="message" />
         <message-row v-for="message in sortedMessages"
                      :key="message.id"
@@ -47,4 +47,5 @@
 </script>
 
 <style>
+
 </style>

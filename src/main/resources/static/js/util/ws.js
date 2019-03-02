@@ -1,6 +1,7 @@
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 
+
 let stompClient = null
 const handlers = []
 
@@ -29,4 +30,3 @@ export function disconnect() {
 export function sendMessage(message) {
     stompClient.send("/app/changeMessage", {}, JSON.stringify(message))
 }
-

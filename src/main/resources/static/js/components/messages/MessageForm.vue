@@ -1,9 +1,10 @@
 <template>
     <v-layout row>
         <v-text-field
-            label="New message"
-            placeholder="Write something"
-            v-model="text" />
+                label="New message"
+                placeholder="Write something"
+                v-model="text"
+        />
         <v-btn @click="save">
             Save
         </v-btn>
@@ -11,15 +12,6 @@
 </template>
 
 <script>
-/*    function getIndex(list, id) {
-        for(var i = 0; i < list.length; i++) {
-            if(list[i].id === id) {
-                return i;
-            }
-        }
-        return -1
-    } //*/
-    //import { sendMessage } from 'util/ws'
     import messagesApi from 'api/messages'
 
     export default {
@@ -38,12 +30,11 @@
         },
         methods: {
             save() {
-                //sendMessage({id: this.id, text: this.text})
-
                 const message = {
                     id: this.id,
                     text: this.text
                 }
+
                 if (this.id) {
                     messagesApi.update(message).then(result =>
                         result.json().then(data => {
@@ -63,7 +54,8 @@
                             }
                         })
                     )
-                } //*/
+                }
+
                 this.text = ''
                 this.id = ''
             }
@@ -72,4 +64,5 @@
 </script>
 
 <style>
+
 </style>
