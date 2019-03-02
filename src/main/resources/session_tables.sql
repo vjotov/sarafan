@@ -30,4 +30,4 @@ CREATE TABLE spring_session_attributes (
   attribute_bytes    BYTEA        NOT NULL,
   CONSTRAINT spring_session_attributes_pk
   PRIMARY KEY (session_primary_id, attribute_name)
-);
+)

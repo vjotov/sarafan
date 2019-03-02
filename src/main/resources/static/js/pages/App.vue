@@ -7,9 +7,10 @@
             <v-btn v-if="profile" icon  href="/logout">
                 <v-icon>exit_to_app</v-icon>
             </v-btn>
-        </v-toolbar app>
+        </v-toolbar>
         <v-content>
-            <v-container v-if="!profile">Необходимо авторизоваться через
+            <v-container v-if="!profile">
+                Необходимо авторизоваться через
                 <a href="/login">Google</a>
             </v-container>
             <v-container v-if="profile">
@@ -34,25 +35,25 @@
         },
         created() {
             addHandler(data => {
-                if(data.objectType === 'MESSAGE') {
+                if (data.objectType === 'MESSAGE') {
                     const index = this.messages.findIndex(item => item.id === data.body.id)
-                    switch(data.eventType) {
+                    switch (data.eventType) {
                         case 'CREATE':
                         case 'UPDATE':
                             if (index > -1) {
                                 this.messages.splice(index, 1, data.body)
                             } else {
-                                 this.messages.push(data.body)
+                                this.messages.push(data.body)
                             }
                             break
                         case 'REMOVE':
                             this.messages.splice(index, 1)
                             break
                         default:
-                            console.error(`Looks like event type is unknown - "${data.eventType}"`)
+                            console.error('Looks like event type is unknown - "${data.eventType}"')
                     }
                 } else {
-                    console.error(`Looks like object type is unknown - "${data.objectType}"`)
+                    console.error('Looks like object type is unknown - "${data.objectType}"')
                 }
             })
         }

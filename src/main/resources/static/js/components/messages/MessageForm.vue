@@ -20,7 +20,7 @@
         return -1
     } //*/
     //import { sendMessage } from 'util/ws'
-    import MessagesApi from 'api/messages'
+    import messagesApi from 'api/messages'
 
     export default {
         props: ['messages', 'messageAttr'],
@@ -45,14 +45,14 @@
                     text: this.text
                 }
                 if (this.id) {
-                    MessagesApi.update(message).then(result =>
+                    messagesApi.update(message).then(result =>
                         result.json().then(data => {
                             const index = this.messages.findIndex(item => item.id === data.id)
                             this.messages.splice(index, 1, data)
                         })
                     )
                 } else {
-                    MessagesApi.add(message).then(result =>
+                    messagesApi.add(message).then(result =>
                         result.json().then(data => {
                             const index = this.messages.findIndex(item => item.id === data.id)
 
