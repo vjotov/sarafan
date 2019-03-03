@@ -15,6 +15,6 @@ Vue.use(Vuetify)
 
 new Vue({
     el: '#app',
-    store, // <=> store: store,
+    store,
     render: a => a(App)
 })

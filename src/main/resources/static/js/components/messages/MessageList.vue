@@ -12,7 +12,6 @@
     import { mapGetters } from 'vuex'
     import MessageRow from 'components/messages/MessageRow.vue'
     import MessageForm from 'components/messages/MessageForm.vue'
-    //import messagesApi from 'api/messages'
 
     export default {
         components: {
@@ -29,7 +28,6 @@
             editMessage(message) {
                 this.message = message
             }
-
         }
     }
 </script>
