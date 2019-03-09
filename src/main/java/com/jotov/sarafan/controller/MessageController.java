@@ -105,7 +105,7 @@ public class MessageController {
 
                 message.setLinkCover(meta.getCover());
                 message.setLinkTitle(meta.getTitle());
-                message.setLinkDescriotption(meta.getDescription());
+                message.setLinkDescription(meta.getDescription());
             }
         }
     }
@@ -122,7 +122,7 @@ public class MessageController {
         );
     }
 
-    private Object getContent(Element element) {
+    private String getContent(Element element) {
         return element == null ? "" : element.attr("conent");
     }
     // fetch("/message/4", { method: 'DELETE', headers: {'Content-Type':'application/json'}}).then(console.log)
