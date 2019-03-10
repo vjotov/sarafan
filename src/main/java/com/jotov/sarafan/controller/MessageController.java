@@ -90,14 +90,15 @@ public class MessageController {
 
     private void fillMeta(Message message) throws IOException {
         String text = message.getText();
-
         Matcher matcher = URL_REGEX.matcher(text);
 
-        if(matcher.find()) {
+        if (matcher.find()) {
             String url = text.substring(matcher.start(), matcher.end());
-            message.setLink(url);
 
             matcher = IMG_REGEX.matcher(url);
+
+            message.setLink(url);
+
             if (matcher.find()) {
                 message.setLinkCover(url);
             } else if (!url.contains("youtu")) {
@@ -109,8 +110,10 @@ public class MessageController {
             }
         }
     }
+
     private MetaDto getMeta(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
+
         Elements title = doc.select("meta[name$=title],meta[property$=title]");
         Elements description = doc.select("meta[name$=description],meta[property$=description]");
         Elements cover = doc.select("meta[name$=image],meta[property$=image]");
@@ -123,15 +126,6 @@ public class MessageController {
     }
 
     private String getContent(Element element) {
-        return element == null ? "" : element.attr("conent");
+        return element == null ? "" : element.attr("content");
     }
-    // fetch("/message/4", { method: 'DELETE', headers: {'Content-Type':'application/json'}}).then(console.log)
-
-//    @MessageMapping("/changeMessage")
-//    @SendTo("/topic/activity")
-//    public Message change(Message message) {
-//
-//        return messageRepo.save(message);
-//
-//    }
 }
