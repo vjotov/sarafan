@@ -4,7 +4,7 @@
                 label="Add comment"
                 placeholder="Write something"
                 v-model="text"
-                @keyup.enter="save
+                @keyup.enter="save"
         />
         <v-btn @click="save">
             Add
@@ -14,7 +14,6 @@
 
 <script>
     import { mapActions } from 'vuex'
-
     export default {
         name: 'CommentForm',
         props: ['messageId'],
@@ -24,7 +23,7 @@
             }
         },
         methods: {
-            ...mapActions['addCommentAction'],
+            ...mapActions(['addCommentAction']),
             async save() {
                 await this.addCommentAction({
                     text: this.text,
@@ -32,11 +31,8 @@
                         id: this.messageId
                     }
                 })
-
                 this.text = ''
             }
-
-
         }
     }
 </script>
