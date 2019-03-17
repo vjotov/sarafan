@@ -4,6 +4,7 @@ import com.jotov.sarafan.domain.Message;
 import com.jotov.sarafan.domain.User;
 import com.jotov.sarafan.domain.Views;
 import com.jotov.sarafan.dto.EventType;
+import com.jotov.sarafan.dto.MessagePageDto;
 import com.jotov.sarafan.dto.MetaDto;
 import com.jotov.sarafan.dto.ObjectType;
 import com.jotov.sarafan.repo.MessageRepo;
@@ -14,6 +15,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -107,7 +110,12 @@ public class MessageService {
     }
 
 
-    public List<Message> getAll() {
-        return messageRepo.findAll();
+    public MessagePageDto findAll(Pageable pageable) {
+        Page<Message> page = messageRepo.findAll(pageable);
+        return new MessagePageDto(
+                page.getContent(),
+                pageable.getPageNumber(),
+                page.getTotalPages()
+        );
     }
 }
