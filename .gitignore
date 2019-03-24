@@ -27,3 +27,5 @@
 /.nb-gradle/
 
  src/main/resources/credentials.txt
+### VS Code ###
+.vscode/
