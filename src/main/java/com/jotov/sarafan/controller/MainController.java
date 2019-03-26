@@ -6,39 +6,48 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.jotov.sarafan.domain.User;
 import com.jotov.sarafan.domain.Views;
 import com.jotov.sarafan.dto.MessagePageDto;
-import com.jotov.sarafan.repo.MessageRepo;
+import com.jotov.sarafan.repo.UserDetailsRepo;
 import com.jotov.sarafan.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
     private final MessageService messageService;
+    private final UserDetailsRepo userDetailsRepo;
 
     @Value("${spring.profiles.active}")
     private String profile;
-    private final ObjectWriter writer;
+    private final ObjectWriter messageWriter;
+    private final ObjectWriter profileWriter;
 
     @Autowired
     public MainController(
-        MessageService messageService,
-        ObjectMapper mapper
+            MessageService messageService,
+            UserDetailsRepo userDetailsRepo, ObjectMapper mapper
     ) {
         this.messageService = messageService;
+        this.userDetailsRepo = userDetailsRepo;
 
-        this.writer = mapper
-                .setConfig(mapper.getSerializationConfig())
+        ObjectMapper objectMapper = mapper
+                .setConfig(mapper.getSerializationConfig());
+        this.messageWriter = objectMapper
                 .writerWithView(Views.FullMessage.class);
+
+        this.profileWriter = objectMapper
+                .writerWithView(Views.FullProfile.class);
     }
 
     @GetMapping
@@ -49,19 +58,22 @@ public class MainController {
         HashMap<Object, Object> data = new HashMap<>();
 
         if(user != null ) {
-            data.put("profile", user);
+            User userFromDb = userDetailsRepo.findById(user.getId()).get();
+            String serilizedProfile = profileWriter.writeValueAsString(user);
+            model.addAttribute("profile", serilizedProfile );
 
             Sort sort = Sort.by(Sort.Direction.DESC, "id");
             PageRequest pageRequest = PageRequest.of(0, MessageController.MESSAGES_PER_PAGE, sort);
             MessagePageDto messagePageDto = messageService.findAll(pageRequest);
 
-            String messages = writer.writeValueAsString(messagePageDto.getMessages());
+            String messages = messageWriter.writeValueAsString(messagePageDto.getMessages());
 
             model.addAttribute("messages", messages);
             data.put("currentPage", messagePageDto.getCurrentPage());
             data.put("totalPages", messagePageDto.getTotalPages());
         } else {
             model.addAttribute("messages", "[]");
+            model.addAttribute("profile", "null" );
         }
 
         model.addAttribute("frontendData", data);
