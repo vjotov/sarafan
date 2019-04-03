@@ -2,6 +2,7 @@
     <v-card class="my-2">
         <v-card-text primary-title>
             <user-link
+                v-if="message.author"
                 :user="message.author"
                 size="48"
             ></user-link>
@@ -27,11 +28,11 @@
     import { mapActions } from 'vuex'
     import Media from 'components/media/Media.vue'
     import CommentList from '../comment/CommentList.vue'
-    import UserLick from 'components/UserLink.vue'
+    import UserLink from 'components/UserLink.vue'
 
     export default {
         props: ['message', 'editMessage'],
-        components: { CommentList, Media },
+        components: { CommentList, Media, UserLink },
         methods: {
             ...mapActions(['removeMessageAction']),
             edit() {

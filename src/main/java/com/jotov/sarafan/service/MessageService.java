@@ -44,7 +44,7 @@ public class MessageService {
     }
 
     public Message create(Message message, User user) throws IOException {
-        message.setCreationDate(LocalDateTime.now());
+            message.setCreationDate(LocalDateTime.now());
         fillMeta(message);
         message.setAuthor(user);
         Message updatedMessage = messageRepo.save(message);
