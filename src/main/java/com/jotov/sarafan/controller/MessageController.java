@@ -46,6 +46,8 @@ public class MessageController {
             @RequestBody Message message,
             @AuthenticationPrincipal User user
     ) throws IOException {
+        //Message message = new Message();
+        //message.setText(messageText);
         return messageService.create(message, user);
     }
     // fetch("/message/5", { method: 'PUT', headers: {'Content-Type':'application/json'}, body:JSON.stringify({text:'Fifth message updated'})}).then(console.log)

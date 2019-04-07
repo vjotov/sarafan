@@ -42,12 +42,12 @@
         computed: {
             isMyProfile() {
                 return !this.$route.params.id ||
-                    this.$route.params.id === this.$store.profile.id
+                    this.$route.params.id === this.$store.state.profile.id
             },
             isISubscribed() {
                 return this.profile.subscribers &&
                     this.profile.subscribers.find(subscription => {
-                        subscription.id === this.$store.profile.id
+                        subscription.id === this.$store.state.profile.id
                     })
             }
         },
