@@ -3,6 +3,7 @@ package com.jotov.sarafan.domain;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "usr")
 @Data
+@ToString(of = {"id", "name"})
 @EqualsAndHashCode(of = {"id"} )
 public class User implements Serializable {
     @Id
@@ -31,31 +33,18 @@ public class User implements Serializable {
     @JsonView(Views.FullProfile.class)
     private LocalDateTime lastVisit;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_subscriptions",
-            joinColumns = @JoinColumn(name = "subscriber_id"),
-            inverseJoinColumns = @JoinColumn(name = "channel_id")
-    )
     @JsonView(Views.FullProfile.class)
-    @JsonIdentityReference
-    @JsonIdentityInfo(
-            property = "id",
-            generator = ObjectIdGenerators.PropertyGenerator.class
+    @OneToMany(
+            mappedBy = "subscriber",
+            orphanRemoval = true
     )
-    private Set<User> subscriptions = new HashSet<>();
+    private Set<UserSubscription> subscriptions = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_subscriptions",
-            joinColumns = @JoinColumn(name = "channel_id"),
-            inverseJoinColumns = @JoinColumn(name = "subscriber_id")
-    )
     @JsonView(Views.FullProfile.class)
-    @JsonIdentityReference
-    @JsonIdentityInfo(
-            property = "id",
-            generator = ObjectIdGenerators.PropertyGenerator.class
+    @OneToMany(
+            mappedBy = "channel",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
     )
-    private Set<User> subscribers = new HashSet<>();
+    private Set<UserSubscription> subscribers = new HashSet<>();
 }

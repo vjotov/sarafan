@@ -1,11 +1,14 @@
 package com.jotov.sarafan.service;
 
 import com.jotov.sarafan.domain.User;
+import com.jotov.sarafan.domain.UserSubscription;
 import com.jotov.sarafan.repo.UserDetailsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
@@ -17,12 +20,18 @@ public class ProfileService {
     }
 
     public User changeSubscription(User channel, User subscriber) {
-        Set<User> subscribers = channel.getSubscribers();
+        List<UserSubscription> subscribers = channel.getSubscribers()
+                .stream()
+                .filter(subscribtion ->
+                        subscriber.getSubscribers().equals(subscriber)
+                )
+                .collect(Collectors.toList());
 
-        if( subscribers.contains(subscriber)) {
-            subscribers.remove(subscriber);
+        if( subscribers.isEmpty()) {
+            UserSubscription subscription = new UserSubscription(channel, subscriber);
+            channel.getSubscribers().add(subscription);
         } else {
-            subscribers.add(subscriber);
+            channel.getSubscribers().removeAll(subscribers);
         }
         return userDetailsRepo.save(channel);
     }

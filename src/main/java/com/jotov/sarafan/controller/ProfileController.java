@@ -5,10 +5,7 @@ import com.jotov.sarafan.domain.User;
 import com.jotov.sarafan.domain.Views;
 import com.jotov.sarafan.service.ProfileService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 
@@ -21,17 +18,17 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @GetMapping({"id"})
+    @GetMapping("{id}")
     @JsonView(Views.FullProfile.class)
-    public User get(@PathParam("id") User user) {
+    public User get(@PathVariable("id") User user) {
         return user;
     }
 
-    @PostMapping("change-subscription/{chennelId}")
+    @PostMapping("change-subscription/{channelId}")
     @JsonView(Views.FullProfile.class)
     public User changeSubscription(
             @AuthenticationPrincipal User subscriber,
-            @PathParam("channelId") User channel
+            @PathVariable("channelId") User channel
     ) {
         if(subscriber.equals(channel)) {
             return channel;
