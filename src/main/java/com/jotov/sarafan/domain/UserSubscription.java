@@ -3,6 +3,7 @@ package com.jotov.sarafan.domain;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.EmbeddedId;
@@ -14,6 +15,7 @@ import javax.persistence.MapsId;
 @Data
 @EqualsAndHashCode(of = "id")
 @ToString(of = "id")
+@NoArgsConstructor
 public class UserSubscription {
     @EmbeddedId
     @JsonIgnore
@@ -46,6 +48,5 @@ public class UserSubscription {
         this.channel = channel;
         this.subscriber = subscriber;
         this.id = new UserSubscriptionId(channel.getId(), subscriber.getId());
-        this.active = false;
     }
 }
