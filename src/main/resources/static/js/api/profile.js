@@ -4,5 +4,7 @@ const profile = Vue.resource('/profile{/id}')
 
 export default {
     get: id => profile.get({id}),
-    changeSubscription: chennelId => Vue.http.post(`/profile/change-subscription/${chennelId}`)
+    changeSubscription: channelId => Vue.http.post(`/profile/change-subscription/${channelId}`),
+    subscriberList: channelId => Vue.http.get(`/profile/get-subscribers/${channelId}`),
+    changeSubscriptionSStatus: subscriberId => Vue.http.post(`/profile/change-status/${subscriberId}`)
 }
